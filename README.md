@@ -1,3 +1,9 @@
+LIVE : https://rushikeshvidhate.github.io/monsters-rolodex/
+
+This is a fun project build using React.
+
+===============================================================================
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
