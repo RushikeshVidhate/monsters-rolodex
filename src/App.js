@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react'
+import CardList from './components/card-list/card-list.component';
+import Search from './components/search/search.component';
+
 import './App.css';
+export default class App extends Component {
+  constructor(){
+    super();
+    this.state = {
+      monsters: [],
+      searchQuery: ''
+    };
+  }
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  handleOnChange = (e) => {
+    this.setState({searchQuery: e.target.value})
+  }
+  componentDidMount(){
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then(response => response.json())
+    .then(users => this.setState({monsters : users}) );
+  }
+
+  render() {
+    let filteredMonsters = this.state.monsters.filter(monster =>monster['name'].toLowerCase().includes(this.state.searchQuery.toLowerCase()))
+    return (
+      <div className='app'>
+        <h1>Welcome to Monster Rolodex</h1>
+        <h4>Built using simple React Application</h4>
+        <Search 
+        placeholder = "Type robo name"
+        handleOnChange={this.handleOnChange}
+        />
+        <CardList monsters={filteredMonsters}/>
+      </div>
+    )
+  }
 }
-
-export default App;
